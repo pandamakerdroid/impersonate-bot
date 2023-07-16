@@ -5,8 +5,9 @@ from telethon.sync import TelegramClient, events
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 config = toml.load('config.toml')
-sched = AsyncIOScheduler(timezone="Asia/Taipei")
 client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
+
+sched = AsyncIOScheduler(timezone="Asia/Taipei")
 
 def generate_greeting():
     now = datetime.datetime.now()
@@ -34,11 +35,11 @@ async def handle_bot(event):
     greeting = generate_greeting()
     await event.reply(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈')
 
-@sched.scheduled_job('cron', day_of_week='sun', hour=23, minute=30)
+@sched.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)
 async def sunday_night_greeting():
-    await send_scheduled_greeting("Sunday 23.30: It's been a full week. As the clock is about to strike midnight, remember to give yourself the rest you need. Sweet dreams, and let's welcome a new week with refreshed energy!")
-    await send_scheduled_greeting("星期日,23:30: 經過了滿滿的一周，當鐘即將敲響午夜時，別忘了給自己足夠的休息。甜美的夢境在等你，讓我們以全新的精神迎接新的一周！")
-    print('Sunday night greeting sent.')
+    await send_scheduled_greeting("Monday 0.30: It's been a full week. As the clock is about to strike midnight, remember to give yourself the rest you need. Sweet dreams, and let's welcome a new week with refreshed energy!")
+    await send_scheduled_greeting("星期一,0:30: 經過了滿滿的一周，當鐘即將敲響午夜時，別忘了給自己足夠的休息。甜美的夢境在等你，讓我們以全新的精神迎接新的一周！")
+    print('Monday night greeting sent.')
 
 @sched.scheduled_job('cron', day_of_week='mon', hour=7, minute=30)
 async def monday_morning_greeting():

@@ -1,6 +1,7 @@
 from telethon.sync import TelegramClient, events
 import datetime
 import toml
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 config = toml.load('config.toml')
 
@@ -33,10 +34,10 @@ with TelegramClient(config['user']['session'], config['user']['api_id'], config[
    async def handler(event):
       await event.reply('{} 高富帥只是曾經的一個傳說, 而我只是一個機器人唷，夜露死苦！🙈'.format(generateGreeting()))
 
-   @client.on(events.NewMessage(pattern='(?i).*(阿綱|阿纲)'))
-   async def handler(event):
-      if(event.chat_id == config['groups']['tom']):
-         await event.reply('阿綱說要請我們所有人吃帝王蟹, 去台灣得頭等艙往返機票也是阿綱全權負責🙈')
+   #@client.on(events.NewMessage(pattern='(?i).*(阿綱|阿纲)'))
+   #async def handler(event):
+   #   if(event.chat_id == config['groups']['tom']):
+   #      await event.reply('阿綱說要請我們所有人吃帝王蟹, 去台灣得頭等艙往返機票也是阿綱全權負責🙈')
 
    @client.on(events.NewMessage(pattern='(?i).*(币圈).*(多久了？)'))
    async def handler(event):

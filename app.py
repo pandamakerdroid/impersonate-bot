@@ -5,7 +5,7 @@ from telethon.sync import TelegramClient, events
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 config = toml.load('config.toml')
-client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
+client = None
 
 sched = AsyncIOScheduler(timezone="Asia/Taipei")
 
@@ -107,6 +107,7 @@ async def run_scheduler():
         await asyncio.sleep(1)
 
 async def run_client():
+    client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)
     await client.start()

@@ -28,9 +28,14 @@ async def send_scheduled_greeting(message):
         await client.send_message(config['targets'][target], message)
 
 async def send_response(message,event):
-    print(f'keywords triggered by: {str(event.message._chat_peer.channel_id)}')
-    if(event.message._chat_peer.channel_id in config['targets'].values()):
-        await event.reply(message)
+    try:
+       print(f'keywords triggered by: {str(event.message._chat_peer.channel_id)}')
+       if(event.message._chat_peer.channel_id in config['targets'].values()):
+           await event.reply(message)
+    except AttributeError:
+       print(f'keywords triggered by: {str(event.message._chat_peer.user_id)}')
+       if(event.message._chat_peer.user_id in config['targets'].values()):
+           await event.reply(message)
         
 # Event handlers for message events
 @events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)'))

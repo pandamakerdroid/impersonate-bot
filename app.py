@@ -32,11 +32,11 @@ async def send_scheduled_greeting(message):
 async def handle_hello(event):
     await event.reply('Hej! Greetings.')
 
-@events.register(events.NewMessage(pattern='(?i).*(gm|moin)$'))
+@events.register(events.NewMessage(pattern='(?i).*(gm|moin|早安|早晨好)$'))
 async def handle_good_morning(event):
     await event.reply('Bonjour!')
 
-@events.register(events.NewMessage(pattern='(?i).*(gn|good night)$'))
+@events.register(events.NewMessage(pattern='(?i).*(gn|good night|晚安)$'))
 async def handle_good_night(event):
     await event.reply('Bonne nuit!')
     

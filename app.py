@@ -29,8 +29,9 @@ async def send_scheduled_greeting(message):
         await client.send_message(config['targets'][target], message)
 
 async def send_response(message,event):
-    if(event.grouped_id in config['targets'])
+    if(event.grouped_id in config['targets']):
         await event.reply(message)
+        
 # Event handlers for message events
 @events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)'))
 async def handle_hello(event):

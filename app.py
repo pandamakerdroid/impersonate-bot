@@ -11,7 +11,7 @@ sched = AsyncIOScheduler(timezone=arguments[1])
 #sched_eu = AsyncIOScheduler(timezone="Europe/Vienna")
 
 def generate_greeting():
-    now = datetime.datetime.now(pytz.timezone(arguments[1))
+    now = datetime.datetime.now(pytz.timezone(arguments[1]))
     greeting = ''
     if now.hour < 18:
         greeting = "Bonjour, mes dames et messieurs! "

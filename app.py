@@ -28,15 +28,15 @@ async def send_scheduled_greeting(message):
         await client.send_message(config['targets'][target], message)
 
 # Event handlers for message events
-@events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)'))
+@events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)$'))
 async def handle_hello(event):
-    await event.reply('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.')
+    await event.reply('Hej! Greetings.')
 
-@events.register(events.NewMessage(pattern='(?i).*(gm|moin)'))
+@events.register(events.NewMessage(pattern='(?i).*(gm|moin)$'))
 async def handle_good_morning(event):
     await event.reply('Bonjour!')
 
-@events.register(events.NewMessage(pattern='(?i).*(gn|good night)'))
+@events.register(events.NewMessage(pattern='(?i).*(gn|good night)$'))
 async def handle_good_night(event):
     await event.reply('Bonne nuit!')
     
@@ -174,6 +174,8 @@ async def run_client():
     client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)
+    client.add_event_handler(handle_good_morning)
+    client.add_event_handler(handle_good_night)
     await client.start()
     await client.run_until_disconnected()
 

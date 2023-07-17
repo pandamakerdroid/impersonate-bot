@@ -22,7 +22,7 @@ def generate_greeting():
 def send_message(targets, message):
     if client is not None:
         client.send_message(targets, message)
-
+        
 async def send_scheduled_greeting(message):
     for target in config['targets']:
         await client.send_message(config['targets'][target], message)
@@ -32,6 +32,14 @@ async def send_scheduled_greeting(message):
 async def handle_hello(event):
     await event.reply('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.')
 
+@events.register(events.NewMessage(pattern='(?i).+(gm|moin)'))
+async def handle_good_morning(event):
+    await event.reply('Bonjour!')
+
+@events.register(events.NewMessage(pattern='(?i).+(gn|good night)'))
+async def handle_good_night(event):
+    await event.reply('Bonne nuit!')
+    
 @events.register(events.NewMessage(pattern='(?i).*(bot|機器人|机器人)'))
 async def handle_bot(event):
     greeting = generate_greeting()

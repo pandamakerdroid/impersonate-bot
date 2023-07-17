@@ -1,4 +1,5 @@
 from telethon.sync import events
+from utils.generate_greeting import generate_greeting
 import toml
 
 config = toml.load('config.toml')

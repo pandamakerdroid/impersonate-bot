@@ -21,7 +21,7 @@ def generate_greeting():
 
 def send_message(targets, message):
     if client is not None:
-        client.send_message(targets, message)
+        await client.send_message(targets, message)
 
 async def send_scheduled_greeting(message):
     for target in config['targets']:
@@ -34,28 +34,28 @@ async def send_response(message,event):
 # Event handlers for message events
 @events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)'))
 async def handle_hello(event):
-    send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
+    await send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
 
 @events.register(events.NewMessage(pattern='(?i).+(gm|早晨|早安)'))
 async def handle_good_morning(event):
-    send_response('Bonjour!', event)
+    await send_response('Bonjour!', event)
 
 @events.register(events.NewMessage(pattern='(?i).+(good evening|晚上好)'))
 async def handle_good_evening(event):
-    send_response('Bonsoir!', event)
+    await send_response('Bonsoir!', event)
     
 @events.register(events.NewMessage(pattern='(?i).+(gn|晚安|安安)'))
 async def handle_good_night(event):
-    send_response('Bonne nuit!', event)
+    await send_response('Bonne nuit!', event)
     
 @events.register(events.NewMessage(pattern='(?i).+(kfc|肯德基)'))
 async def handle_kfc(event):
-    send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40', event)
+    await send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40', event)
 
 @events.register(events.NewMessage(pattern='(?i).*(bot|機器人|机器人)'))
 async def handle_bot(event):
     greeting = generate_greeting()
-    send_response(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈', event)
+    await send_response(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈', event)
 
 #@sched_eu.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)
 @sched.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)

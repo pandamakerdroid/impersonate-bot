@@ -48,11 +48,11 @@ async def handle_good_evening(event):
 async def handle_good_night(event):
     await send_response('Bonne nuit!', event)
     
-@events.register(events.NewMessage(pattern='(?i).+(kfc|肯德基)'))
+@events.register(events.NewMessage(pattern='(?i).*(kfc|肯德基|ＫＦＣ)'))
 async def handle_kfc(event):
     await send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40', event)
 
-@events.register(events.NewMessage(pattern='(?i).*(bot|機器人|机器人)'))
+@events.register(events.NewMessage(pattern='(?i).*(機器人|机器人)'))
 async def handle_bot(event):
     greeting = generate_greeting()
     await send_response(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈', event)

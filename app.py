@@ -169,11 +169,11 @@ async def friday_evening_greeting():
     await send_scheduled_greeting("星期五, 18:30, 晚上好! 工作一週結束，你做得非常好！放鬆一下，享受你的週末，你值得擁有它!")
     print('Friday evening greeting sent.')
 
-@sched.scheduled_job('interval', seconds=2)
-async def timed_job():
-    await send_scheduled_greeting("Test message, sorry for spamming.")
-    await send_scheduled_greeting("測試用訊息, 抱歉灌水了,1l4fu04h96ej94:D")
-    print('This job is run every 2 seconds.')
+#@sched.scheduled_job('interval', seconds=2)
+#async def timed_job():
+#    await send_scheduled_greeting("Test message, sorry for spamming.")
+#    await send_scheduled_greeting("測試用訊息, 抱歉灌水了,1l4fu04h96ej94:D")
+#    print('This job is run every 2 seconds.')
 
 
 async def run_scheduler():

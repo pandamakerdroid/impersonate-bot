@@ -5,6 +5,8 @@ api_hash = ""
 
 [targets]
 
+[targets_kfc]
+
 [targets_vie]
 
 [test]

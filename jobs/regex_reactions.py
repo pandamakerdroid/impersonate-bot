@@ -4,8 +4,11 @@ import toml
 
 config = toml.load('config.toml')
 
-def Merge(dict_1, dict_2):
-    dict_1.update(dict_2)
+def Merge(dict_1, dict_2 = None, dict_3 = None):
+    if (dict_2 is not None):
+        dict_1.update(dict_2)
+    if (dict_3 is not None):
+        dict_1.update(dict_3)
     return dict_1
 
 async def send_response(message,event,targets=Merge(config['targets'],config['targets_vie'])):
@@ -43,7 +46,7 @@ async def handle_good_night(event):
 @events.register(events.NewMessage(pattern='(?i).*(kfc|肯德基|ＫＦＣ)'))
 async def handle_kfc(event):
     greeting = generate_greeting()
-    await send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nKFC 肯德基 臺灣: https://tinyurl.com/2de39hzw\nKFC 肯德基 香港: https://tinyurl.com/2g6wp8b8', event)
+    await send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nKFC 肯德基 臺灣: https://tinyurl.com/2de39hzw\nKFC 肯德基 香港: https://tinyurl.com/2g6wp8b8', event, targets=Merge(config['targets'],config['targets_vie'], config['targets_kfc']))
 
 @events.register(events.NewMessage(pattern='(?i).*(機器人|机器人)'))
 async def handle_bot(event):

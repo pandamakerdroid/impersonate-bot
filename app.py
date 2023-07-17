@@ -1,4 +1,4 @@
-import datetime, toml, asyncio, sys
+import datetime, toml, asyncio, sys, pytz
 from telethon.sync import TelegramClient, events
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
@@ -11,11 +11,11 @@ sched = AsyncIOScheduler(timezone=arguments[1])
 #sched_eu = AsyncIOScheduler(timezone="Europe/Vienna")
 
 def generate_greeting():
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(pytz.timezone(arguments[1))
     greeting = ''
     if now.hour < 18:
         greeting = "Bonjour, mes dames et messieurs! "
-    elif now.hour >= 18:
+    elif now.hour >= 18 and now.hour:
         greeting = "Bonsoir, mes dames et messieurs! "
     return greeting
 

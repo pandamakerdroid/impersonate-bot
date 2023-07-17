@@ -10,7 +10,7 @@ async def send_scheduled_greeting(message, client, targets):
 async def sunday_night_greeting(client, targets):
     await send_scheduled_greeting("Sunday 23.30: It's been a full week. As the clock is about to strike midnight, remember to give yourself the rest you need. Sweet dreams, and let's welcome a new week with refreshed energy! Good night!", client, targets)
     await send_scheduled_greeting("星期日, 23:30: 經過了滿滿的一周，當鐘即將敲響午夜時，別忘了給自己足夠的休息。甜美的夢境在等你，讓我們以全新的精神迎接新的一周！好夢！", client, targets)
-    print('Monday night greeting sent.')
+    print('Sunday night greeting sent.')
 
 async def monday_morning_greeting(client, targets):
     await send_scheduled_greeting("Monday 07.30. Morning! Today marks the start of a new week, a day full of hope. Remember, every day is a new opportunity. Let's tackle the challenges with a positive attitude!", client, targets)

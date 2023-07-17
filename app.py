@@ -38,36 +38,41 @@ from jobs.daily_greetings import (
 arguments = sys.argv
 config = toml.load('config.toml')
 
+sched_test = AsyncIOScheduler(timezone="Asia/Taipei")
 sched = AsyncIOScheduler(timezone="Asia/Taipei")
 sched_vie = AsyncIOScheduler(timezone="Europe/Vienna")
 
-def setup_scheduler(sched, targets):
-    #sched.add_job(test_job,'interval', [client, targets], seconds = 2)
-    sched.add_job(sunday_night_greeting,'cron', [client, targets], day_of_week='sun', hour=23, minute=30 )
-    sched.add_job(monday_morning_greeting,'cron', [client, targets], day_of_week='mon', hour=7, minute=30 )
-    sched.add_job(monday_noon_greeting,'cron', [client, targets], day_of_week='mon', hour=12, minute=30 )
-    sched.add_job(monday_evening_greeting,'cron', [client, targets], day_of_week='mon', hour=18, minute=30 )
-    sched.add_job(monday_night_greeting,'cron', [client, targets], day_of_week='mon', hour=23, minute=30 )
-    sched.add_job(tuesday_morning_greeting,'cron', [client, targets], day_of_week='tue', hour=7, minute=30 )
-    sched.add_job(tuesday_noon_greeting,'cron', [client, targets], day_of_week='tue', hour=12, minute=00 )
-    sched.add_job(tuesday_evening_greeting,'cron', [client, targets], day_of_week='tue', hour=18, minute=30 )
-    sched.add_job(tuesday_night_greeting,'cron', [client, targets], day_of_week='tue', hour=23, minute=30 )
-    sched.add_job(wednesday_morning_greeting,'cron', [client, targets], day_of_week='wed', hour=7, minute=30 )
-    sched.add_job(wednesday_noon_greeting,'cron', [client, targets], day_of_week='wed', hour=12, minute=00 )
-    sched.add_job(wednesday_evening_greeting,'cron', [client, targets], day_of_week='wed', hour=18, minute=30 )
-    sched.add_job(wednesday_night_greeting,'cron', [client, targets], day_of_week='wed', hour=23, minute=30 )
-    sched.add_job(thursday_morning_greeting,'cron', [client, targets], day_of_week='thu', hour=7, minute=30 )
-    sched.add_job(thursday_noon_greeting,'cron', [client, targets], day_of_week='thu', hour=12, minute=00 )
-    sched.add_job(thursday_evening_greeting,'cron', [client, targets], day_of_week='thu', hour=18, minute=30 )
-    sched.add_job(thursday_night_greeting,'cron', [client, targets], day_of_week='thu', hour=23, minute=30 )
-    sched.add_job(friday_morning_greeting,'cron', [client, targets], day_of_week='fri', hour=7, minute=30 )
-    sched.add_job(friday_noon_greeting,'cron', [client, targets], day_of_week='fri', hour=12, minute=00 )
-    sched.add_job(friday_evening_greeting,'cron', [client, targets], day_of_week='fri', hour=18, minute=30 )
-    sched.add_job(friday_night_greeting,'cron', [client, targets], day_of_week='fri', hour=23, minute=30 )
-    sched.start()
+def setup_scheduler_test(scheduler, targets):
+    scheduler.add_job(test_job,'interval', [client, targets], seconds = 2)
+    scheduler.start()
+
+def setup_scheduler(scheduler, targets):
+    scheduler.add_job(sunday_night_greeting,'cron', [client, targets], day_of_week='sun', hour=23, minute=30 )
+    scheduler.add_job(monday_morning_greeting,'cron', [client, targets], day_of_week='mon', hour=7, minute=30 )
+    scheduler.add_job(monday_noon_greeting,'cron', [client, targets], day_of_week='mon', hour=12, minute=30 )
+    scheduler.add_job(monday_evening_greeting,'cron', [client, targets], day_of_week='mon', hour=18, minute=30 )
+    scheduler.add_job(monday_night_greeting,'cron', [client, targets], day_of_week='mon', hour=23, minute=30 )
+    scheduler.add_job(tuesday_morning_greeting,'cron', [client, targets], day_of_week='tue', hour=7, minute=30 )
+    scheduler.add_job(tuesday_noon_greeting,'cron', [client, targets], day_of_week='tue', hour=12, minute=00 )
+    scheduler.add_job(tuesday_evening_greeting,'cron', [client, targets], day_of_week='tue', hour=18, minute=30 )
+    scheduler.add_job(tuesday_night_greeting,'cron', [client, targets], day_of_week='tue', hour=23, minute=30 )
+    scheduler.add_job(wednesday_morning_greeting,'cron', [client, targets], day_of_week='wed', hour=7, minute=30 )
+    scheduler.add_job(wednesday_noon_greeting,'cron', [client, targets], day_of_week='wed', hour=12, minute=00 )
+    scheduler.add_job(wednesday_evening_greeting,'cron', [client, targets], day_of_week='wed', hour=18, minute=30 )
+    scheduler.add_job(wednesday_night_greeting,'cron', [client, targets], day_of_week='wed', hour=23, minute=30 )
+    scheduler.add_job(thursday_morning_greeting,'cron', [client, targets], day_of_week='thu', hour=7, minute=30 )
+    scheduler.add_job(thursday_noon_greeting,'cron', [client, targets], day_of_week='thu', hour=12, minute=00 )
+    scheduler.add_job(thursday_evening_greeting,'cron', [client, targets], day_of_week='thu', hour=18, minute=30 )
+    scheduler.add_job(thursday_night_greeting,'cron', [client, targets], day_of_week='thu', hour=23, minute=30 )
+    scheduler.add_job(friday_morning_greeting,'cron', [client, targets], day_of_week='fri', hour=7, minute=30 )
+    scheduler.add_job(friday_noon_greeting,'cron', [client, targets], day_of_week='fri', hour=12, minute=00 )
+    scheduler.add_job(friday_evening_greeting,'cron', [client, targets], day_of_week='fri', hour=18, minute=30 )
+    scheduler.add_job(friday_night_greeting,'cron', [client, targets], day_of_week='fri', hour=23, minute=30 )
+    scheduler.start()
 async def run_scheduler():
-    setup_scheduler(sched=sched,targets=config['targets'])
-    setup_scheduler(sched=sched_vie,targets=config['targets_vie'])
+    setup_scheduler(sched,config['targets'])
+    setup_scheduler(sched_vie,config['targets_vie'])
+    #setup_scheduler_test(sched_test, config['test'])
     while True:
         await asyncio.sleep(1)
 
@@ -85,7 +90,6 @@ async def run_client():
     await client.run_until_disconnected()
 
 async def main():
-    await asyncio.gather(run_client())
-    await asyncio.gather(run_scheduler())
+    await asyncio.gather(run_client(), run_scheduler())
 
 asyncio.run(main())

@@ -19,6 +19,10 @@ async def send_response(message,event):
 async def handle_hello(event):
     await send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
 
+@events.register(events.NewMessage(pattern='(?i).*(ramen|拉面|拉麵)'))
+async def handle_ramen(event):
+    await send_response('Hast du Heute lust auf Takumi oder Shoyu, meine Liebe?', event)
+
 @events.register(events.NewMessage(pattern='(?i).*(gm|早晨|早安)'))
 async def handle_good_morning(event):
     await send_response('Bonjour!', event)

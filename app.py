@@ -1,14 +1,15 @@
-import datetime
-import toml
-import asyncio
+import datetime, toml, asyncio, sys
 from telethon.sync import TelegramClient, events
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
+arguments = sys.argv
 config = toml.load('config.toml')
 client = None
 
-sched = AsyncIOScheduler(timezone="Asia/Taipei")
-sched_eu = AsyncIOScheduler(timezone="Europe/Vienna")
+sched = AsyncIOScheduler(timezone=arguments[1])
+#timezone="Asia/Taipei"
+#timezone="Europe/Vienna"
+#sched_eu = AsyncIOScheduler(timezone="Europe/Vienna")
 client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
 
 def generate_greeting():

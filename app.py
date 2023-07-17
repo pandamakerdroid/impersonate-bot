@@ -4,7 +4,6 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 arguments = sys.argv
 config = toml.load('config.toml')
-client = None
 
 sched = AsyncIOScheduler(timezone=arguments[1])
 #timezone="Asia/Taipei"
@@ -163,6 +162,7 @@ async def run_scheduler():
         await asyncio.sleep(1)
 
 async def run_client():
+    global client
     client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)

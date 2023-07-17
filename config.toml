@@ -3,5 +3,4 @@ session = "name"
 api_id = 0
 api_hash = ""
 
-[groups]
-me = "me"
+[targets]

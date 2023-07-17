@@ -36,14 +36,21 @@ async def send_response(message,event):
 async def handle_hello(event):
     send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
 
-@events.register(events.NewMessage(pattern='(?i).+(gm|moin)'))
+@events.register(events.NewMessage(pattern='(?i).+(gm|早晨|早安)'))
 async def handle_good_morning(event):
     send_response('Bonjour!', event)
 
-@events.register(events.NewMessage(pattern='(?i).+(gn|good night)'))
+@events.register(events.NewMessage(pattern='(?i).+(good evening|晚上好)'))
+async def handle_good_evening(event):
+    send_response('Bonsoir!', event)
+    
+@events.register(events.NewMessage(pattern='(?i).+(gn|晚安|安安)'))
 async def handle_good_night(event):
     send_response('Bonne nuit!', event)
-
+    
+@events.register(events.NewMessage(pattern='(?i).+(kfc|肯德基)'))
+async def handle_kfc(event):
+    send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40', event)
 
 @events.register(events.NewMessage(pattern='(?i).*(bot|機器人|机器人)'))
 async def handle_bot(event):
@@ -178,6 +185,10 @@ async def run_client():
     client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)
+    client.add_event_handler(handle_kfc)
+    client.add_event_handler(handle_good_morning)
+    client.add_event_handler(handle_good_evening)
+    client.add_event_handler(handle_good_night)
     await client.start()
     await client.run_until_disconnected()
 

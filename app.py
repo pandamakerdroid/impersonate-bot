@@ -28,7 +28,7 @@ async def send_scheduled_greeting(message):
         await client.send_message(config['targets'][target], message)
 
 async def send_response(message,event):
-    if(event.message._sender_id in config['targets']):
+    if(event.message._sender_id in config['targets'].values()):
         await event.reply(message)
         
 # Event handlers for message events

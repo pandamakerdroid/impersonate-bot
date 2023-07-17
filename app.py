@@ -10,7 +10,6 @@ sched = AsyncIOScheduler(timezone=arguments[1])
 #timezone="Asia/Taipei"
 #timezone="Europe/Vienna"
 #sched_eu = AsyncIOScheduler(timezone="Europe/Vienna")
-client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
 
 def generate_greeting():
     now = datetime.datetime.now()
@@ -163,6 +162,7 @@ async def run_scheduler():
         await asyncio.sleep(1)
 
 async def run_client():
+    client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)
     await client.start()

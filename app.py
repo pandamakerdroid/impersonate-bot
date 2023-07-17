@@ -36,6 +36,10 @@ async def handle_hello(event):
 async def handle_good_morning(event):
     await event.reply('Bonjour!')
 
+@events.register(events.NewMessage(pattern='(?i).*(good evening|晚上好)$'))
+async def handle_good_evening(event):
+    await event.reply('Bonsoir!')
+    
 @events.register(events.NewMessage(pattern='(?i).*(gn|good night|晚安)$'))
 async def handle_good_night(event):
     await event.reply('Bonne nuit!')
@@ -180,7 +184,9 @@ async def run_client():
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)
     client.add_event_handler(handle_good_morning)
+    client.add_event_handler(handle_good_evening)
     client.add_event_handler(handle_good_night)
+    client.add_event_handler(handle_kfc)
     await client.start()
     await client.run_until_disconnected()
 

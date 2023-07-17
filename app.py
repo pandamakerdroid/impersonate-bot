@@ -19,7 +19,7 @@ def generate_greeting():
         greeting = "Bonsoir, mes dames et messieurs! "
     return greeting
 
-def send_message(targets, message):
+async def send_message(targets, message):
     if client is not None:
         await client.send_message(targets, message)
 

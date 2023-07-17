@@ -42,15 +42,15 @@ async def send_response(message,event):
 async def handle_hello(event):
     await send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
 
-@events.register(events.NewMessage(pattern='(?i).+(gm|早晨|早安)'))
+@events.register(events.NewMessage(pattern='(?i).*(gm|早晨|早安)'))
 async def handle_good_morning(event):
     await send_response('Bonjour!', event)
 
-@events.register(events.NewMessage(pattern='(?i).+(good evening|晚上好)'))
+@events.register(events.NewMessage(pattern='(?i).*(good evening|晚上好)'))
 async def handle_good_evening(event):
     await send_response('Bonsoir!', event)
     
-@events.register(events.NewMessage(pattern='(?i).+(gn|晚安|安安)'))
+@events.register(events.NewMessage(pattern='(?i).*(gn|晚安|安安)'))
 async def handle_good_night(event):
     await send_response('Bonne nuit!', event)
     

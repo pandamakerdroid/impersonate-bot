@@ -21,7 +21,8 @@ def generate_greeting():
     return greeting
 
 def send_message(targets, message):
-    client.send_message(targets, message)
+    if client is not None:
+        client.send_message(targets, message)
 
 async def send_scheduled_greeting(message):
     for target in config['targets']:

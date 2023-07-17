@@ -4,7 +4,11 @@ import toml
 
 config = toml.load('config.toml')
 
-async def send_response(message,event,targets=config['targets']+config['targets_vie']):
+def Merge(dict_1, dict_2):
+    dict_1.update(dict_2)
+    return dict_1
+
+async def send_response(message,event,targets=Merge(config['targets'],config['targets_vie'])):
     try:
        print(f'keywords triggered by: {str(event.message._chat_peer.channel_id)}')
        if(event.message._chat_peer.channel_id in targets.values()):

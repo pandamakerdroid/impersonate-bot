@@ -44,7 +44,7 @@ async def handle_good_evening(event):
 async def handle_good_night(event):
     await event.reply('Bonne nuit!')
     
-@events.register(events.NewMessage(pattern='(?i).*(bot|機器人|机器人)'))
+@events.register(events.NewMessage(pattern='(?i).*(機器人|机器人)'))
 async def handle_bot(event):
     greeting = generate_greeting()
     await event.reply(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈')

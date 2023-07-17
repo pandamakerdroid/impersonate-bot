@@ -45,6 +45,11 @@ async def handle_bot(event):
     greeting = generate_greeting()
     await event.reply(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈')
 
+@events.register(events.NewMessage(pattern='(?i).*(kfc|肯德基)'))
+async def handle_kfc(event):
+    greeting = generate_greeting()
+    await event.reply(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40')
+    
 #@sched_eu.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)
 @sched.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)
 async def sunday_night_greeting():

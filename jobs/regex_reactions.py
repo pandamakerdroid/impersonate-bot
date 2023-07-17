@@ -4,14 +4,14 @@ import toml
 
 config = toml.load('config.toml')
 
-async def send_response(message,event):
+async def send_response(message,event,targets=config['targets']):
     try:
        print(f'keywords triggered by: {str(event.message._chat_peer.channel_id)}')
-       if(event.message._chat_peer.channel_id in config['targets'].values()):
+       if(event.message._chat_peer.channel_id in targets.values()):
            await event.reply(message)
     except AttributeError:
        print(f'keywords triggered by: {str(event.message._chat_peer.user_id)}')
-       if(event.message._chat_peer.user_id in config['targets'].values()):
+       if(event.message._chat_peer.user_id in targets.values()):
            await event.reply(message)
 
 # Event handlers for message events
@@ -19,9 +19,10 @@ async def send_response(message,event):
 async def handle_hello(event):
     await send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
 
+#ned mein bevorzugter Ansatz, aber telethon unterstützte keine extra Parameter
 @events.register(events.NewMessage(pattern='(?i).*(ramen|拉面|拉麵)'))
 async def handle_ramen(event):
-    await send_response('Hast du Heute lust auf Takumi oder Shoyu, meine Liebe?', event)
+    await send_response('Hast du Heute lust auf Takumi oder Shoyu, meine Liebe?', event, targets=config['targets_vie'])
 
 @events.register(events.NewMessage(pattern='(?i).*(gm|早晨|早安)'))
 async def handle_good_morning(event):

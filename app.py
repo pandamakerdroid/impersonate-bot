@@ -21,7 +21,7 @@ def generate_greeting():
         greeting = "Bonsoir, mes dames et messieurs! "
     return greeting
 
-def send_message(client, targets, message):
+def send_message(targets, message):
     client.send_message(targets, message)
 
 async def send_scheduled_greeting(message):

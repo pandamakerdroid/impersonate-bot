@@ -57,7 +57,7 @@ async def handle_good_night(event):
 @events.register(events.NewMessage(pattern='(?i).*(kfc|肯德基|ＫＦＣ)'))
 async def handle_kfc(event):
     greeting = generate_greeting()
-    await send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40', event)
+    await send_response(f'{greeting}\n這裡尋找你鍾意的套餐唷\nKFC 肯德基 臺灣: https://tinyurl.com/2de39hzw\nKFC 肯德基 香港: https://tinyurl.com/2g6wp8b8', event)
 
 @events.register(events.NewMessage(pattern='(?i).*(機器人|机器人)'))
 async def handle_bot(event):

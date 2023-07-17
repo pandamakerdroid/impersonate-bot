@@ -1,4 +1,7 @@
 from telethon.sync import events
+import toml
+
+config = toml.load('config.toml')
 
 async def send_response(message,event):
     try:
@@ -9,7 +12,7 @@ async def send_response(message,event):
        print(f'keywords triggered by: {str(event.message._chat_peer.user_id)}')
        if(event.message._chat_peer.user_id in config['targets'].values()):
            await event.reply(message)
-           
+
 # Event handlers for message events
 @events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)'))
 async def handle_hello(event):

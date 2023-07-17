@@ -32,11 +32,11 @@ async def send_scheduled_greeting(message):
 async def handle_hello(event):
     await event.reply('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.')
 
-@events.register(events.NewMessage(pattern='(gm|.+gm|moin)'))
+@events.register(events.NewMessage(pattern='(?i)(gm|moin)$'))
 async def handle_good_morning(event):
     await event.reply('Bonjour!')
 
-@events.register(events.NewMessage(pattern='(gn|good night)'))
+@events.register(events.NewMessage(pattern='(?i)(gn|good night)$'))
 async def handle_good_night(event):
     await event.reply('Bonne nuit!')
     

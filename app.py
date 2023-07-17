@@ -1,9 +1,10 @@
-import datetime, toml, asyncio, sys, pytz
+import datetime, toml, asyncio, sys
 from telethon.sync import TelegramClient, events
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 arguments = sys.argv
 config = toml.load('config.toml')
+client = None
 
 sched = AsyncIOScheduler(timezone=arguments[1])
 #timezone="Asia/Taipei"
@@ -11,49 +12,44 @@ sched = AsyncIOScheduler(timezone=arguments[1])
 #sched_eu = AsyncIOScheduler(timezone="Europe/Vienna")
 
 def generate_greeting():
-    now = datetime.datetime.now(pytz.timezone(arguments[1]))
+    now = datetime.datetime.now()
     greeting = ''
     if now.hour < 18:
         greeting = "Bonjour, mes dames et messieurs! "
-    elif now.hour >= 18 and now.hour:
+    elif now.hour >= 18:
         greeting = "Bonsoir, mes dames et messieurs! "
     return greeting
 
 def send_message(targets, message):
     if client is not None:
         client.send_message(targets, message)
-        
+
 async def send_scheduled_greeting(message):
     for target in config['targets']:
         await client.send_message(config['targets'][target], message)
 
+async def send_response(message,event):
+    if(event.grouped_id in config['targets'])
+        await event.reply(message)
 # Event handlers for message events
-@events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)$'))
+@events.register(events.NewMessage(pattern='(?i).*(Hello|自动回复)'))
 async def handle_hello(event):
-    await event.reply('Hej! Greetings.')
+    send_response('Hej! You have reached out to the automated bot answer, please note that your message will be disregarded.', event)
 
-@events.register(events.NewMessage(pattern='(?i).*(gm|moin|早安|早晨好)$'))
+@events.register(events.NewMessage(pattern='(?i).+(gm|moin)'))
 async def handle_good_morning(event):
-    await event.reply('Bonjour!')
+    send_response('Bonjour!', event)
 
-@events.register(events.NewMessage(pattern='(?i).*(good evening|晚上好)$'))
-async def handle_good_evening(event):
-    await event.reply('Bonsoir!')
-    
-@events.register(events.NewMessage(pattern='(?i).*(gn|good night|晚安)$'))
+@events.register(events.NewMessage(pattern='(?i).+(gn|good night)'))
 async def handle_good_night(event):
-    await event.reply('Bonne nuit!')
-    
-@events.register(events.NewMessage(pattern='(?i).*(機器人|机器人)'))
+    send_response('Bonne nuit!', event)
+
+
+@events.register(events.NewMessage(pattern='(?i).*(bot|機器人|机器人)'))
 async def handle_bot(event):
     greeting = generate_greeting()
-    await event.reply(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈')
+    send_response(f'{greeting}I\'m just a bot, je suis qu\'un Bot🙈', event)
 
-@events.register(events.NewMessage(pattern='(?i).*(kfc|肯德基)'))
-async def handle_kfc(event):
-    greeting = generate_greeting()
-    await event.reply(f'{greeting}\n這裡尋找你鍾意的套餐唷\nhttps://www.kfcclub.com.tw/menu/hot-meal?mid=40')
-    
 #@sched_eu.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)
 @sched.scheduled_job('cron', day_of_week='mon', hour=0, minute=30)
 async def sunday_night_greeting():
@@ -166,11 +162,11 @@ async def friday_evening_greeting():
     await send_scheduled_greeting("星期五, 18:30, 晚上好! 工作一週結束，你做得非常好！放鬆一下，享受你的週末，你值得擁有它!")
     print('Friday evening greeting sent.')
 
-#@sched.scheduled_job('interval', seconds=2)
-#async def timed_job():
-#    await send_scheduled_greeting("Test message, sorry for spamming.")
-#    await send_scheduled_greeting("測試用訊息, 抱歉灌水了,1l4fu04h96ej94:D")
-#    print('This job is run every 2 seconds.')
+@sched.scheduled_job('interval', seconds=2)
+async def timed_job():
+    await send_scheduled_greeting("Test message, sorry for spamming.")
+    await send_scheduled_greeting("測試用訊息, 抱歉灌水了,1l4fu04h96ej94:D")
+    print('This job is run every 2 seconds.')
 
 
 async def run_scheduler():
@@ -179,14 +175,9 @@ async def run_scheduler():
         await asyncio.sleep(1)
 
 async def run_client():
-    global client
     client = TelegramClient(config['user']['session'], config['user']['api_id'], config['user']['api_hash'])
     client.add_event_handler(handle_hello)
     client.add_event_handler(handle_bot)
-    client.add_event_handler(handle_good_morning)
-    client.add_event_handler(handle_good_evening)
-    client.add_event_handler(handle_good_night)
-    client.add_event_handler(handle_kfc)
     await client.start()
     await client.run_until_disconnected()
 

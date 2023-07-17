@@ -28,6 +28,7 @@ async def send_scheduled_greeting(message):
         await client.send_message(config['targets'][target], message)
 
 async def send_response(message,event):
+    print(f'keywords triggered by: {str(event.message._chat_peer.channel_id)}')
     if(event.message._chat_peer.channel_id in config['targets'].values()):
         await event.reply(message)
         

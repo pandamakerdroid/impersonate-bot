@@ -38,12 +38,13 @@ from jobs.daily_greetings import (
 arguments = sys.argv
 config = toml.load('config.toml')
 
-sched_test = AsyncIOScheduler(timezone="Asia/Taipei")
+sched_test = AsyncIOScheduler(timezone="Europe/Vienna")
 sched = AsyncIOScheduler(timezone="Asia/Taipei")
 sched_vie = AsyncIOScheduler(timezone="Europe/Vienna")
 
 def setup_scheduler_test(scheduler, targets):
     scheduler.add_job(test_job,'interval', [client, targets], seconds = 2)
+    scheduler.add_job(test_job,'cron', [client, targets], day_of_week='tue', hour=7, minute=42)
     scheduler.start()
 
 def setup_scheduler(scheduler, targets):

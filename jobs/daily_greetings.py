@@ -1,10 +1,10 @@
 
-async def send_message(client, targets, message):
+async def send_message(client, target, message):
     if client is not None:
-        await client.send_message(targets, message)
+        await client.send_message(target, message)
 
 async def send_scheduled_greeting(message, client, targets):
-    for target in targets:
+    for target in targets.values():
         await send_message(client, target, message)
 
 async def sunday_night_greeting(client, targets):
@@ -113,6 +113,7 @@ async def friday_night_greeting(client, targets):
     print('Friday night greeting sent.')
 
 async def test_job(client, targets):
+    print("test")
     await send_scheduled_greeting("Test message, sorry for spamming.", client, targets)
     await send_scheduled_greeting("測試用訊息, 抱歉灌水了,1l4fu04h96ej94:D", client, targets)
-    print('This job is run every 2 seconds.')
+    print('Test job was triggered.')

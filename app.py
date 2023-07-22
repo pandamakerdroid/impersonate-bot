@@ -10,6 +10,7 @@ from jobs.regex_reactions import (
     handle_kfc,
     handle_ramen,
 )
+from jobs.regex_reactions_amends import handle_first_response, handle_second_response
 from jobs.wrecker import handle_wreck_group, handle_wreck_person
 from jobs.daily_greetings import (
     sunday_night_greeting,
@@ -246,6 +247,8 @@ async def run_client():
     client.add_event_handler(handle_good_night)
     client.add_event_handler(handle_wreck_group)
     client.add_event_handler(handle_wreck_person)
+    client.add_event_handler(handle_first_response)
+    client.add_event_handler(handle_second_response)
     await client.start()
     await client.run_until_disconnected()
 

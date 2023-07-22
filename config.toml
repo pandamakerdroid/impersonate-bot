@@ -12,6 +12,7 @@ api_hash = ""
 [targets_wreck_groups]
 
 [targets_wreck_person]
+[targets_amends]
 
 
 [test]

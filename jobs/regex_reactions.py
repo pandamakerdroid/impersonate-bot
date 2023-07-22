@@ -31,15 +31,15 @@ async def handle_hello(event):
 async def handle_ramen(event):
     await send_response('Hast du Heute lust auf Takumi oder Shoyu, meine Liebe?', event, targets=config['targets_vie'])
 
-@events.register(events.NewMessage(pattern='(?i).*(gm|早晨|早安)'))
+@events.register(events.NewMessage(pattern='(?i).*(gm|早晨|早安|morning|bonjour|morgen|moin|boungiorno|bom dia|buenos dias)'))
 async def handle_good_morning(event):
     await send_response('Bonjour!', event)
 
-@events.register(events.NewMessage(pattern='(?i).*(good evening|晚上好)'))
+@events.register(events.NewMessage(pattern='(?i).*(good evening|晚上好|bonsoir|bonasera)'))
 async def handle_good_evening(event):
     await send_response('Bonsoir!', event)
     
-@events.register(events.NewMessage(pattern='(?i).*(gn|晚安|安安)'))
+@events.register(events.NewMessage(pattern='(?i).*(gn|晚安|安安|good night|bonne nuit)'))
 async def handle_good_night(event):
     await send_response('Bonne nuit!', event)
     
